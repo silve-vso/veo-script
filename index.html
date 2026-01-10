@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>انتقل إلى الدالة اثنين</title>
+    <title>الدالة 1</title>
     <style>
         body, html {
             height: 100%;
@@ -23,37 +23,15 @@
 </head>
 <body>
 
-<button id="actionButton">انتقل إلى الدالة اثنين</button>
+<button id="nextButton">انتقل إلى الدالة اثنين</button>
 
 <script>
-    const button = document.getElementById('actionButton');
+    const button = document.getElementById('nextButton');
 
-    // دالة لتحديد حالة الرابط
-    function updateLink() {
-        const path = window.location.pathname;
-
-        if (path === '/' || path === '') {
-            // إذا نحن في الدالة 1
-            button.textContent = 'انتقل إلى الدالة اثنين';
-            button.onclick = () => {
-                window.location.pathname += 'Zai81lap';
-            };
-        } else if (path.includes('Zai81lap')) {
-            // إذا نحن في الدالة 2
-            button.textContent = 'ارجع إلى الدالة واحد';
-            button.onclick = () => {
-                window.location.pathname = '/AEnal019Ba';
-            };
-        } else {
-            // أي حالة أخرى
-            button.textContent = 'انتقل إلى الدالة اثنين';
-            button.onclick = () => {
-                window.location.pathname += 'Zai81lap';
-            };
-        }
-    }
-
-    updateLink();
+    button.onclick = () => {
+        // الانتقال إلى صفحة الدالة 2
+        window.location.href = 'Zai81lap.html';
+    };
 </script>
 
 </body>
