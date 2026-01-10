@@ -1,103 +1,38 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>دخول بكلمة سر + Supabase Demo</title>
-  <style>
-    /* بسيط ومباشر */
-    body { font-family: Arial, sans-serif; margin:0; height:100vh; display:flex; align-items:center; justify-content:center; background:#f3f4f6; }
-    #app { width: 100%; max-width:600px; padding:20px; box-shadow:0 6px 20px rgba(0,0,0,0.08); background:white; border-radius:10px; }
-    .overlay { position:fixed; inset:0; background:rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; }
-    .box { background:white; padding:24px; border-radius:8px; width:320px; box-shadow:0 6px 18px rgba(0,0,0,0.2); }
-    input[type="password"], button { width:100%; padding:10px; margin-top:10px; font-size:16px; }
-    #content { display:none; }
-    pre { background:#111; color:#fff; padding:12px; border-radius:6px; overflow:auto; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدالة 1</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        button {
+            padding: 20px 40px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-  <div id="app">
-    <h2>تطبيق بسيط - صفحة محمية بكلمة سر</h2>
-    <div id="content">
-      <p>مرحبا! تم إدخال كلمة السر بنجاح. سأجرب الاتصال بـ Supabase باستخدام المفتاح الذي أدخلته في الكود.</p>
-      <div>
-        <button id="testBtn">اختبار الاتصال بـ Supabase</button>
-      </div>
-      <h4>نتيجة الاختبار (console)</h4>
-      <pre id="log">لم يتم التشغيل بعد.</pre>
-    </div>
-  </div>
 
-  <!-- شاشة طلب كلمة السر -->
-  <div id="pwOverlay" class="overlay">
-    <div class="box">
-      <h3>أدخل كلمة السر</h3>
-      <input id="pwInput" type="password" placeholder="Password" />
-      <button id="pwBtn">إرسال</button>
-      <p style="font-size:12px;color:#666;margin-top:8px;">(هذا مثال تجريبي — غيّر كلمة السر والمفتاح قبل النشر)</p>
-    </div>
-  </div>
+<button id="nextButton">انتقل إلى الدالة اثنين</button>
 
-  <!-- Supabase JS عبر CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script>
-    // ------ ضَع هنا رابط المشروع ومفتاح الـ ANON (PUBLIC) فقط ------
-    const SUPABASE_URL = "https://ahtpdjwqwndcuzrogihl.supabase.co"; // عينته انت بالفعل
-    const SUPABASE_ANON_KEY = "PUT_YOUR_ANON_KEY_HERE"; // استبدله بمفتاح anon (لا تضع service_role هنا)
-    // ------------------------------------------------------------
+<script>
+    const button = document.getElementById('nextButton');
 
-    // كلمة السر التجريبية (غيّرها)
-    const DEMO_PASSWORD = "myDemoPass123";
+    button.onclick = () => {
+        // عند الضغط نضيف /Zai81lap إلى الرابط الحالي
+        window.location.pathname += 'Zai81lap';
+    };
+</script>
 
-    const overlay = document.getElementById('pwOverlay');
-    const pwInput = document.getElementById('pwInput');
-    const pwBtn = document.getElementById('pwBtn');
-    const content = document.getElementById('content');
-    const logEl = document.getElementById('log');
-    const testBtn = document.getElementById('testBtn');
-
-    pwBtn.addEventListener('click', () => {
-      const val = pwInput.value;
-      if (val === DEMO_PASSWORD) {
-        overlay.style.display = 'none';
-        content.style.display = 'block';
-        appendLog('كلمة السر صحيحة — الواجهة متاحة.');
-      } else {
-        appendLog('كلمة السر خاطئة.');
-        pwInput.value = "";
-      }
-    });
-
-    function appendLog(msg) {
-      const t = new Date().toLocaleTimeString();
-      logEl.textContent = `[${t}] ${msg}\n` + logEl.textContent;
-      console.log(msg);
-    }
-
-    // عند الضغط على زر الاختبار، ننشئ عميل Supabase ونحاول استدعاء مثالي
-    testBtn.addEventListener('click', async () => {
-      if (!SUPABASE_ANON_KEY || SUPABASE_ANON_KEY.includes("PUT_YOUR")) {
-        appendLog("خطأ: ضع SUPABASE_ANON_KEY الصحيح في الكود.");
-        return;
-      }
-      appendLog("تهيئة عميل Supabase...");
-      const supabase = supabaseJs.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-      appendLog("جلب time من قاعدة البيانات (مثال: استدعاء RPC أو جدول تجريبي)...");
-      // مثال بسيط: نستخدم REST لطلب health عبر API العام أو نجري استعلام خفيف إذا لم يكن عندك جداول.
-      // سنجرب استدعاء وظيفة بسيطة: list tables via rpc غير متاح دائمًا - لذا نعرض اختبار بسيط للنسخة.
-      try {
-        // مثال: إذا كان عندك جدول اسمه "profiles" يمكنك فك التعليق التالي:
-        // const { data, error } = await supabase.from('profiles').select('*').limit(5);
-        // appendLog("data: " + JSON.stringify(data));
-
-        // كاختبار عام سنجرب طلب health عبر endpoint (Read-only) - ليس دائمًا متاح
-        const res = await fetch(`${SUPABASE_URL}/rest/v1/`, { method: 'GET', headers: { apikey: SUPABASE_ANON_KEY }});
-        appendLog("تم إرسال طلب اختبار. رمز الحالة: " + res.status);
-      } catch (err) {
-        appendLog("خطأ أثناء الاتصال: " + err.message);
-      }
-    });
-  </script>
 </body>
 </html>
